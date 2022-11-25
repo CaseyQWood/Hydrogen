@@ -1,8 +1,6 @@
 import { Link, Image, gql, useShopQuery, CacheLong } from "@shopify/hydrogen";
 
 export default function FeaturedCollections() {
-  console.log("Featured Collections Laoding...")
-  
   const {
     data: { collections },
   } = useShopQuery({
@@ -20,6 +18,15 @@ export default function FeaturedCollections() {
           return (
             <Link key={collection.id} to={`/collections/${collection.handle}`}>
               <div className="grid gap-4">
+                {collection?.image && (
+                  <Image
+                    className="rounded shadow-border overflow-clip inline-block aspect-[5/4] md:aspect-[3/2] object-cover"
+                    width={"100%"}
+                    height={336}
+                    alt={`Image of ${collection.title}`}
+                    data={collection.image}
+                  />
+                )}
                 <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy">
                   {collection.title}
                 </h2>
@@ -39,6 +46,12 @@ const QUERY = gql`
         id
         title
         handle
+        image {
+          altText
+          width
+          height
+          url
+        }
       }
     }
   }
