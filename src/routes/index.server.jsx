@@ -5,9 +5,9 @@ import { Layout } from "../components/Layout.server";
 export default function Home() {
   return (
     <Layout>
-      <Suspense>
+      {/* <Suspense>  TODO this Suspense is inconsistent */}
         <FeaturedCollections />
-      </Suspense>
+      {/* </Suspense> */}
     </Layout>
   );
 }
