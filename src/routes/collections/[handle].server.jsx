@@ -14,6 +14,8 @@ import { Suspense } from "react";
 export default function Collection() {
   const { handle } = useRouteParams();
 
+  console.log("Collection", handle);
+
   const {
     data: { collection },
   } = useShopQuery({
@@ -32,9 +34,9 @@ export default function Collection() {
 
   return (
     <Layout>
-      <Suspense>
+      {/* <Suspense> */}
         <Seo type="collection" data={collection} />
-      </Suspense>
+      {/* </Suspense> */}
       <header className="grid w-full gap-8 p-4 py-8 md:p-8 lg:p-12 justify-items-start">
         <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
           {collection.title}

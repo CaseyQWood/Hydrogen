@@ -1,6 +1,8 @@
 import { ProductOptionsProvider } from "@shopify/hydrogen";
 
-export default function ProductDetails({ product }) {
+export function ProductDetails({ product }) {
+  console.log("HERE --->");
+  
   return (
     <ProductOptionsProvider data={product}>
       <section className="w-full overflow-x-hidden gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">

@@ -25,7 +25,7 @@ export function Layout({ children }) {
 
   return (
     <>
-    <Suspense>
+    {/* <Suspense> */}
       <Seo
         type="defaultSeo"
         data={{
@@ -33,7 +33,7 @@ export function Layout({ children }) {
           description: shop.description,
         }}
       />
-      </Suspense>
+      {/* </Suspense> */}
       <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
         <div className="">
           <a href="#mainContent" className="sr-only">
@@ -48,9 +48,9 @@ export function Layout({ children }) {
         >
           <div className="flex gap-12">
             <Link className="font-bold" to="/">
-              <Suspense>
+              {/* <Suspense> */}
                 {shop.name}
-              </Suspense>
+              {/* </Suspense> */}
             </Link>
           </div>
         </header>
