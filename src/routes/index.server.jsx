@@ -3,11 +3,12 @@ import FeaturedCollections from "../components/FeaturedCollections.server";
 import { Layout } from "../components/Layout.server";
 
 export default function Home() {
+  console.log("Home")
   return (
     <Layout>
-      {/* <Suspense>  TODO this Suspense is inconsistent */}
+      <Suspense> 
         <FeaturedCollections />
-      {/* </Suspense> */}
+      </Suspense>
     </Layout>
   );
 }

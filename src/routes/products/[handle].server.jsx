@@ -7,20 +7,21 @@ import {
   Seo,
 } from "@shopify/hydrogen";
 import { Suspense } from "react";
+
 import { Layout } from "../../components/Layout.server";
+import ProductDetails from "../../components/ProductDetails.client";
 
-export default function Pruducts() {
-  const {handle} = useRouteParams();
+export default function Product({ params }) {
+  const { handle } = useRouteParams();
 
-  console.log("This is Handle: ", handle);
-
-  // could be some syntax issues here
-  const {data: {product}} = useShopQuery({
+  const {
+    data: { product },
+  } = useShopQuery({
     query: PRODUCT_QUERY,
     variables: {
-      handle
-    }
-  })
+      handle,
+    },
+  });
 
   useServerAnalytics({
     shopify: {
@@ -29,30 +30,96 @@ export default function Pruducts() {
     },
   });
 
-  // Implement an `Seo` component for the product. By specifying "type=product"
-  // you're overriding the `defaultSeo` type in the Layout component.
   return (
     <Layout>
       <Suspense>
         <Seo type="product" data={product} />
       </Suspense>
-      <section className="p-6 md:p-8 lg:p-12">
-        This will be the product page for <strong>{product.title}</strong>
-      </section>
+      <ProductDetails product={product} />
     </Layout>
   );
 }
 
-// Add a Graphql query that retrieves a product by its handle.
 const PRODUCT_QUERY = gql`
-  query Product($language: LanguageCode, $handle: String!)
-  @inContext(language: $language) {
+  fragment MediaFields on Media {
+    mediaContentType
+    alt
+    previewImage {
+      url
+    }
+    ... on MediaImage {
+      id
+      image {
+        url
+        width
+        height
+      }
+    }
+    ... on Video {
+      id
+      sources {
+        mimeType
+        url
+      }
+    }
+    ... on Model3d {
+      id
+      sources {
+        mimeType
+        url
+      }
+    }
+    ... on ExternalVideo {
+      id
+      embedUrl
+      host
+    }
+  }
+  query Product($handle: String!) {
     product(handle: $handle) {
       id
       title
+      vendor
+      descriptionHtml
+      media(first: 7) {
+        nodes {
+          ...MediaFields
+        }
+      }
+      variants(first: 100) {
+        nodes {
+          id
+          availableForSale
+          compareAtPriceV2 {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          image {
+            id
+            url
+            altText
+            width
+            height
+          }
+          priceV2 {
+            amount
+            currencyCode
+          }
+          sku
+          title
+          unitPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
       seo {
-        title
         description
+        title
       }
     }
   }

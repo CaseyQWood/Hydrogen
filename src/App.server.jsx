@@ -8,6 +8,7 @@ import {
 import {Suspense} from 'react';
 
 function App() {
+  console.log("App")
   return (
     <Suspense fallback={null}>
       <ShopifyProvider>
