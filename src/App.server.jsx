@@ -9,7 +9,7 @@ import {
 import {Suspense} from 'react';
 
 function App({routes}) {
-  console.log("App routes", routes)
+  console.log("App routes", routes);
   return (
     <Suspense fallback={null}>
       <ShopifyProvider>
